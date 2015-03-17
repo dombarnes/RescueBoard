@@ -1,25 +1,23 @@
-#!/usr/bin/env ruby
 
-# RescueTime Productivity Widget for Statusboard
 require 'rubygems'
 require 'sinatra'
-require 'erb'
+require 'tilt/erb'
 require 'httparty'
+require 'json'
+require 'rest-client'
 
-# Tilt.register Tilt::ERBTemplate, 'html.erb'
-
-before do
-    
+configure do
+	set :root, File.dirname(__FILE__)
+	set :rescueboard_api_key, ENV['RESCUEBOARD_API_KEY']
+	set :title, "RescueBoard for Statusboard"
 end
 
-def get_results
-    apiKey = "B63GP9AzVAG6fRMPQOBfW9HkqJT8BMwtBwALl7lc"
-    response = HTTParty.get("https://www.rescuetime.com/anapi/daily_summary_feed?key=#{apiKey}")
-    productivityPulse = response.parsed_response[0]["productivity_pulse"]
-    totalHours = response.parsed_response[0]["total_duration_formatted"]
-end
+raise Exception.new("Please specify RESCUEBOARD_API_KEY in your environment") if settings.rescueboard_api_key.nil?
 
 get '/' do
-    get_results
-    erb :index, :locals => {:productivityPulse => params[:productivityPulse], :totalHours => params[:totalHours]}
+	json = RestClient.get("https://www.rescuetime.com/anapi/daily_summary_feed?key=#{settings.rescueboard_api_key}")
+	jhash = JSON.parse(json)
+	pulse = jhash[0]["productivity_pulse"]
+	hours = jhash[0]["total_duration_formatted"]
+	erb :index, locals: {:pulse => pulse, :hours => hours}
 end

@@ -64,14 +64,11 @@ months = {
     "11" => "Nov",
     "12" => "Dec"
 }
-datasequences = []
-minTotal = 0
-maxTotal = 1
-# puts "--> Fetching RescueTime Data"
-lastDate = []
+
 
 response = HTTParty.get("https://www.rescuetime.com/anapi/daily_summary_feed?key=#{apiKey}")
 
 productivity = response.parsed_response[0]["productivity_pulse"]
 totalHours = response.parsed_response[0]["total_duration_formatted"]
 
+p response
