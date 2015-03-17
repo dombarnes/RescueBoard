@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Need a server
-gem 'sinatra', :git => 'sinatra/sinatra'
+gem 'sinatra', :github => 'sinatra/sinatra'
 
 gem 'tilt'
 # And some stuff to run the script
