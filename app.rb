@@ -4,12 +4,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'erb'
-
 require 'httparty'
-require 'base64'
-require 'date'
-require 'json'
-require 'action_view'
 
 # Tilt.register Tilt::ERBTemplate, 'html.erb'
 
