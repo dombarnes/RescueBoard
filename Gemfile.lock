@@ -18,6 +18,8 @@ GEM
     rack (1.6.0)
     rack-protection (1.5.3)
       rack
+    shotgun (0.9.1)
+      rack (>= 1.0)
     tilt (2.0.1)
 
 PLATFORMS
@@ -25,6 +27,6 @@ PLATFORMS
 
 DEPENDENCIES
   httparty
-  json
+  shotgun
   sinatra!
   tilt
