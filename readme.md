@@ -4,7 +4,7 @@ RescueBoard is a widget for [Statusboard from Panic](http://www.panic.com/status
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)  
 
-![RescueBoard widget](http://github.com/dombarnes/rescueboard/rescueboard.png "RescueBoard widget")
+![RescueBoard widget](https://raw.githubusercontent.com/dombarnes/RescueBoard/master/Rescueboard.png "RescueBoard widget")
 
 ## Endpoints  
 /latest - Displays the latest productivity information from your feed. This is currently limited to the previous day's data by the RescueTime API.  
