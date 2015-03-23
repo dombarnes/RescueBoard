@@ -1,8 +1,8 @@
 {
   "name": "RescueBoard",
   "description": "A Statusboard widget for your RescueTime data",
-  "repository": "https://github.com/dombarnes/rescueboard",
-  "success_url": "/today",
+  "repository": "https://raw.githubusercontent.com/dombarnes/RescueBoard/master/app.json",
+  "success_url": "/latest",
   "keywords": ["rescuetime", "panic", "statusboard" "sinatra"],
   "env": {
     "RESCUETIME_API_KEY": "https://www.rescuetime.com/anapi/manage",
