@@ -15,6 +15,10 @@ end
 raise Exception.new("Please specify RESCUEBOARD_API_KEY in your environment") if settings.rescueboard_api_key.nil?
 
 get '/' do
+	"Welcome to RescueBoard. Set your URL to an endoint, like '/today'"
+end
+
+get '/latest' do
 	json = RestClient.get("https://www.rescuetime.com/anapi/daily_summary_feed?key=#{settings.rescueboard_api_key}")
 	jhash = JSON.parse(json)
 	pulse = jhash[0]["productivity_pulse"]
