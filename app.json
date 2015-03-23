@@ -1,14 +1,7 @@
 {
   "name": "RescueBoard",
   "description": "A Statusboard widget for your RescueTime data",
-  "repository": "https://raw.githubusercontent.com/dombarnes/RescueBoard/master/app.json",
+  "repository": "https://github.com/dombarnes/rescueboard",
   "success_url": "/latest",
-  "keywords": ["rescuetime", "panic", "statusboard" "sinatra"],
-  "env": {
-    "RESCUETIME_API_KEY": "https://www.rescuetime.com/anapi/manage",
-    "WEB_CONCURRENCY": {
-      "description": "The number of processes to run.",
-      "value": "1"
-    }
-  }
+  "keywords": ["rescuetime", "panic", "statusboard" "sinatra"]
 }
