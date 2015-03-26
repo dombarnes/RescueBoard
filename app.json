@@ -3,5 +3,5 @@
   "description": "A Statusboard widget for your RescueTime data",
   "repository": "https://github.com/dombarnes/rescueboard",
   "success_url": "/latest",
-  "keywords": ["rescuetime", "panic", "statusboard" "sinatra"]
+  "keywords": ["rescuetime", "panic", "statusboard", "sinatra"]
 }
