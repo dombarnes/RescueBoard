@@ -1,4 +1,6 @@
 .DS_Store
 .env
+.powenv
+.powrc
 *.php
-
+/tmp

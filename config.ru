@@ -1,5 +1,4 @@
-equire './app.rb'
+require './app.rb'
 
 run Rack::URLMap.new \
-  "/"       => Sinatra::Application,
- 
+  "/"       => Sinatra::Application
