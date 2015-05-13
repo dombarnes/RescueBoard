@@ -4,19 +4,45 @@ require 'tilt/erb'
 require 'httparty'
 require 'json'
 require 'rest-client'
+require 'base64'
+require 'date'
+require 'action_view'
+include ActionView::Helpers::DateHelper
 
-configure do
-	set :root, File.dirname(__FILE__)
-	set :title, "RescueBoard for Statusboard"
-	set :rescueboard_api_key, ENV['RESCUEBOARD_API_KEY']
-	set :af_username, ENV['AF_USERNAME']
-	set :af_password, ENV['AF_PASSWORD']
-	set :af_client_key, ENV['AF_CLIENT_KEY']
+require './config/init.rb'
+require './config/products.rb'
+require './salesboard'
+
+set :root, File.dirname(__FILE__)
+
+helpers do
+	def build_salesgraph(datasequences, minTotal, maxTotal)
+		salesGraph = {
+		    :graph =>  {
+		        :title => settings.graphTitle,
+		        :total => settings.displayTotal,
+		        :refresh => settings.refreshInterval,
+		        :type => settings.graphType,
+		        :yAxis => {
+		            :hide => settings.hideTotals,
+		            # :units => { :prefix => "Total " },
+		            :minValue => minTotal,
+		            :maxValue => maxTotal,
+		            :scaleTo => settings.scaleTo
+		        },
+		        :datasequences => datasequences
+		    }
+		}
+	end
+
+	def comma_numbers(number, delimiter = ',')
+	  number.to_s.reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1#{delimiter}").reverse
+	end
+
 end
 
-
 get '/' do
-	"Welcome to RescueBoard. Set your URL to an endoint, like '/today'"
+	"Welcome to RescueBoard. Set your URL to an endoint, like '/latest'"
 end
 
 get '/latest' do
@@ -25,7 +51,7 @@ get '/latest' do
 	jhash = JSON.parse(json)
 	pulse = jhash[0]["productivity_pulse"]
 	hours = jhash[0]["total_duration_formatted"]
-	erb :index, locals: {:pulse => pulse, :hours => hours}
+	erb :latest, locals: {:pulse => pulse, :hours => hours}
 end
 
 get '/sales' do
@@ -33,6 +59,35 @@ get '/sales' do
 	raise Exception.new("Please specify AF_PASSWORD in your environment") if settings.af_password.nil?
 	raise Exception.new("Please specify AF_CLIENT_KEY in your environment") if settings.af_client_key.nil?
 	# string to allow bar or line
-	# call salesboard.rb
-	# salesGraph
+	products = [
+	  { :title => "TTV", :id => 36376562723, :color => "green" },
+	  { :title => "BookClub", :id => 40014607864, :color => "yellow" },
+	  { :title => "Snappt", :id => 40304598815, :color => "red" }
+	]
+	months = { "1" => "Jan", "2" => "Feb", "3" => "Mar", "4" => "Apr", "5" => "May", "6" => "Jun", "7" => "Jul", "8" => "Aug", "9" => "Sep", "10" => "Oct", "11" => "Nov", "12" => "Dec" }
+	startDate = (Date.today - settings.salesDays).strftime("%Y-%m-%d")
+	endDate = (Date.today - 1).strftime("%Y-%m-%d")
+	datasequences = []
+	minTotal = 0
+	maxTotal = 1
+	lastDate = []
+	
+	products.each do |p|
+	    salesData = []
+	    response = HTTParty.get("https://api.appfigures.com/v2/sales/products+dates/?start_date=#{startDate}&end_date=#{endDate}&granularity=daily&products=#{p[:id]}", :headers => { "X-Client-Key" => settings.af_client_key}, :basic_auth => {:username => settings.af_username, :password => settings.af_password })
+	    response.parsed_response.sort.each do |day|
+	        day_hash = day[1]
+	        day_hash.each do |data|
+	            newDate = Date.parse(data[1]['date'])
+	            dateString = "#{newDate.day} #{months["#{newDate.month}"]}"
+	            downloads = comma_numbers(data[1]["downloads"].to_i)
+	            maxTotal = downloads.to_i if downloads.to_i > maxTotal
+	            minTotal = downloads.to_i if downloads.to_i < minTotal || minTotal == 1
+	            salesData << { :title => dateString, :value => downloads }
+	            lastDate = dateString
+	        end
+	    end
+	    datasequences << { :title => p[:title], :color => p[:color], :datapoints => salesData }
+	end
+	build_salesgraph(datasequences,minTotal, maxTotal).to_json
 end
