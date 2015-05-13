@@ -11,7 +11,6 @@ include ActionView::Helpers::DateHelper
 
 require './config/init.rb'
 require './config/products.rb'
-require './salesboard'
 
 set :root, File.dirname(__FILE__)
 
