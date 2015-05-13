@@ -53,16 +53,12 @@ get '/latest' do
 	erb :latest, locals: {:pulse => pulse, :hours => hours}
 end
 
-get '/sales' do
+get '/appstore/downloads' do
 	raise Exception.new("Please specify AF_USERNAME in your environment") if settings.af_username.nil?
 	raise Exception.new("Please specify AF_PASSWORD in your environment") if settings.af_password.nil?
 	raise Exception.new("Please specify AF_CLIENT_KEY in your environment") if settings.af_client_key.nil?
 	# string to allow bar or line
-	products = [
-	  { :title => "TTV", :id => 36376562723, :color => "green" },
-	  { :title => "BookClub", :id => 40014607864, :color => "yellow" },
-	  { :title => "Snappt", :id => 40304598815, :color => "red" }
-	]
+	
 	months = { "1" => "Jan", "2" => "Feb", "3" => "Mar", "4" => "Apr", "5" => "May", "6" => "Jun", "7" => "Jul", "8" => "Aug", "9" => "Sep", "10" => "Oct", "11" => "Nov", "12" => "Dec" }
 	startDate = (Date.today - settings.salesDays).strftime("%Y-%m-%d")
 	endDate = (Date.today - 1).strftime("%Y-%m-%d")
@@ -71,7 +67,7 @@ get '/sales' do
 	maxTotal = 1
 	lastDate = []
 	
-	products.each do |p|
+	settings.products.each do |p|
 	    salesData = []
 	    response = HTTParty.get("https://api.appfigures.com/v2/sales/products+dates/?start_date=#{startDate}&end_date=#{endDate}&granularity=daily&products=#{p[:id]}", :headers => { "X-Client-Key" => settings.af_client_key}, :basic_auth => {:username => settings.af_username, :password => settings.af_password })
 	    response.parsed_response.sort.each do |day|
