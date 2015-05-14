@@ -7,11 +7,9 @@ configure do
   set :af_username, ENV['AF_USERNAME']
   set :af_password, ENV['AF_PASSWORD']
   set :af_client_key, ENV['AF_CLIENT_KEY']
-
-  set :salesDays, 10 # Number of days you want to see.
+  
   set :currency, "GBP" # The selected currency under your AppFigures account settings
   set :graphTitle, "App Store Downloads" # The title for the graph
-  set :graphType, "line" # This can be 'bar' or 'line'
   set :displayTotal, true # Set to true if you want a total revenue listed at the end of the graph.
   set :hideTotals, false # If you want to see the sales total for each day on the y-axis set this to true
   set :refreshInterval, 120 # Set as seconds. Min 5, default 120

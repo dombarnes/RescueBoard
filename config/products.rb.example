@@ -1,9 +1,0 @@
-require 'rubygems'
-require 'sinatra'
-
-configure do
-	set :products, [
-					  { :title => "App Name 1", :id => 1234567890, :color => "green" },
-					  { :title => "App Name 2", :id => 2345678901, :color => "yellow" }
-					]
-end
