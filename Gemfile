@@ -11,5 +11,6 @@ gem "logger"
 
 group :test, :development do
   gem 'rake'
+  gem 'rack/test'
   gem 'rspec'
 end
