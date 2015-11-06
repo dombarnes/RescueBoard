@@ -10,7 +10,7 @@ configure do
 	set :products, [
 			# { :title => "Trilby Training", :id => 5954125798, :color => "aqua" },
     		{ :title => "TTV", :id => 36376562723, :color => "green" },
-			{ :title => "AppleTV", :id => 41821375626, :color => "green" },
+			{ :title => "AppleTV", :id => 41821375626, :color => "white" },
 			{ :title => "TTV Player", :id => 36376203818, :color => "red" },
     		# { :title => "BookClub", :id => 40014607864, :color => "yellow" }
     		# { :title => "Supporting Teachers", :id => 40189399639, :color => "blue" },
