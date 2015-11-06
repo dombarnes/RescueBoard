@@ -7,6 +7,7 @@ gem 'httparty'
 gem 'json'
 gem 'rest-client'
 gem 'actionview'
+gem "logger"
 
 group :test, :development do
   gem 'rake'

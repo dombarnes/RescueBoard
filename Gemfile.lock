@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/sinatra/sinatra.git
-  revision: 0827bf9eb51562c67aaa5a587cc20e475525a1b5
+  revision: fabf8efc451f361c444b288eb94292593f340f77
   specs:
     sinatra (1.4.6)
       rack (~> 1.5, >= 1.5.4, < 1.6)
@@ -24,23 +24,24 @@ GEM
       tzinfo (~> 1.1)
     builder (3.2.2)
     diff-lcs (1.2.5)
-    domain_name (0.5.24)
+    domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
-    httparty (0.13.5)
+    httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
     json (1.8.3)
+    logger (1.2.8)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
-    mime-types (2.6.1)
+    mime-types (2.6.2)
     mini_portile (0.6.2)
-    minitest (5.8.0)
+    minitest (5.8.2)
     multi_xml (0.5.5)
-    netrc (0.10.3)
+    netrc (0.11.0)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     rack (1.5.5)
@@ -87,6 +88,7 @@ DEPENDENCIES
   actionview
   httparty
   json
+  logger
   rake
   rest-client
   rspec
