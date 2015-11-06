@@ -37,7 +37,7 @@ AF_CLIENT_KEY=abcdefghijk
 
 
 ## Endpoints  
-#### /pulse  
+#### /rescuetime/pulse  
 Displays the latest productivity information from your feed. This is currently limited to the previous day's data by the RescueTime API.  
 
 ![RescueBoard widget](https://raw.githubusercontent.com/dombarnes/RescueBoard/master/Rescueboard.png "RescueBoard widget")
@@ -48,10 +48,18 @@ Example
 ````
 /appstore/downloads?type=line&days=10
 ````
-##### Options 
+##### Options
+type: line or bar
+
+#### /appstore/sales  
+Displays [AppFigures](http://appfigures.com) sales data. You can add query strings to specify the chart type and number of days to use. Defaults to 7 day line  
+Example  
+````
+/appstore/sales?type=line&days=10
+````
+##### Options
 type: line or bar
 
 ## Future Development
 - App Store revenue widget
-- App Store revenue chart
 - RescueTime productivity chart
