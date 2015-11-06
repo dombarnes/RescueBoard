@@ -89,6 +89,7 @@ DEPENDENCIES
   httparty
   json
   logger
+  rack
   rake
   rest-client
   rspec
