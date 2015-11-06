@@ -30,23 +30,26 @@ AF_CLIENT_KEY=abcdefghijk
 ### Local Development
 1. ````git clone https://github.com/dombarnes/RescueBoard.git && cd RescueBoard````
 2. ```bundle install```
+3. Configure your products in ````config/products.rb````
 3. ```foreman start```
 4. Set ENV Vars in your shell environment or in .env or .powenv
 5. Open [http://localhost:5001]()
 
 
 ## Endpoints  
-####/pulse  
+#### /pulse  
 Displays the latest productivity information from your feed. This is currently limited to the previous day's data by the RescueTime API.  
 
 ![RescueBoard widget](https://raw.githubusercontent.com/dombarnes/RescueBoard/master/Rescueboard.png "RescueBoard widget")
 
-####/appstore/downloads  
+#### /appstore/downloads  
 Displays [AppFigures](http://appfigures.com) sales data. You can add query strings to specify the chart type and number of days to use. Defaults to 7 day line  
 Example  
 ````
 /appstore/downloads?type=line&days=10
 ````
+##### Options 
+type: line or bar
 
 ## Future Development
 - App Store revenue widget

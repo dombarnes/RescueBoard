@@ -4,3 +4,4 @@
 .powrc
 *.php
 /tmp
+logs/
