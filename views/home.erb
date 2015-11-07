@@ -1,7 +1,19 @@
+<style>
+	body, * { font-family: helvetica, arial, sans-serif;}
+	h1 { font-size: 26px; }
+	h2 { font-size: 18px; }
+	p { font-size: 16px; }
+</style>
 <h1>Welcome to RescueBoard</h1>
 <h2>Endpoints</h2>
-<p><a href="/rescueboard/pulse">/rescueboard/pulse</a> gives you an HTML widget of yesterdays productivity.
-<p><a href="/appstore/downloads">/appstore/downloads</a> gives you a chart widget of download numbers.
-<p><a href="/appstore/sales">/appstore/sales</a> gives you a chart widget of sales revenue.
+<p>RescueBoard gives you a couple of widgets built for <a href="https://panic.com/statusboard/">Statusboard by Panic</a>.
+<h3>RescueTime</h3>
+<p><a href="/rescuetime/pulse">/rescuetime/pulse</a> gives you an HTML widget of yesterdays productivity.
+<h3>AppFigures</h3>
+<p><a href="/appstore/downloads">/appstore/downloads</a> gives you JSON for a a chart widget of download numbers.
+<p><a href="/appstore/sales">/appstore/sales</a> gives you JSON for a chart widget of sales revenue.
+<h4>URL Params</h4>
+	<p>type - bar or line (default is line)
+	<p>days - numeric value for how many days to show (default is 7)
 
 <p>For more information go to <a href="//github.com/dombarnes/rescueboard">Rescueboard on GitHub</a>

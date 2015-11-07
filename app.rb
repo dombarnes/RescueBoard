@@ -39,12 +39,16 @@ helpers do
 	  number.to_s.reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1#{delimiter}").reverse
 	end
 
+	def months
+		months = { "1" => "Jan", "2" => "Feb", "3" => "Mar", "4" => "Apr", "5" => "May", "6" => "Jun", "7" => "Jul", "8" => "Aug", "9" => "Sep", "10" => "Oct", "11" => "Nov", "12" => "Dec" }
+	end
+
 	def build_response(report_type, days, chart_type)
 		$datasequences = []
 		$salesData = []
 		$minTotal = 0
 		$maxTotal = 1
-		months = { "1" => "Jan", "2" => "Feb", "3" => "Mar", "4" => "Apr", "5" => "May", "6" => "Jun", "7" => "Jul", "8" => "Aug", "9" => "Sep", "10" => "Oct", "11" => "Nov", "12" => "Dec" }
+		
 		startDate = (Date.today - days.to_i).strftime("%Y-%m-%d")
 		endDate = (Date.today - 1).strftime("%Y-%m-%d")
 		$log.debug "Grabbing data from #{startDate} until #{endDate}"
@@ -68,7 +72,7 @@ helpers do
 			$datasequences << { :title => p[:title], :color => p[:color], :datapoints => $salesData }
 			$salesData = []
 		end
-		build_salesgraph($datasequences, $minTotal, $maxTotal, chart_type).to_json
+		JSON.pretty_generate build_salesgraph($datasequences, $minTotal, $maxTotal.round(-1), chart_type)
 	end
 
 end
@@ -79,12 +83,15 @@ end
 
 get '/rescuetime/pulse' do
 	raise Exception.new("Please specify RESCUEBOARD_API_KEY in your environment") if settings.rescueboard_api_key.nil?
+	
 	json = RestClient.get("https://www.rescuetime.com/anapi/daily_summary_feed?key=#{settings.rescueboard_api_key}")
 	jhash = JSON.parse(json)
 	pulse = jhash[0]["productivity_pulse"]
 	hours = jhash[0]["total_duration_formatted"]
-	erb :latest, locals: {:pulse => pulse, :hours => hours}
-end # /pulse
+	date = Date.parse(jhash[0]["date"])
+	fDate = "#{date.day} #{months["#{date.month}"]}"
+	erb :pulse, locals: {:pulse => pulse, :hours => hours, :date => fDate}
+end # /rescuetime/pulse
 
 get '/appstore/downloads' do
 	raise Exception.new("Please specify AF_USERNAME in your environment") if settings.af_username.nil?
