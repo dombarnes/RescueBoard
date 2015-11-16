@@ -2,12 +2,13 @@ source "https://rubygems.org"
 ruby '2.2.3'
 # Need a server
 gem 'sinatra', :github => 'sinatra/sinatra'
+gem 'sinatra-contrib'
 gem 'tilt'
 gem 'httparty'
 gem 'json'
 gem 'rest-client'
 gem 'actionview'
-gem "logger"
+gem 'logger'
 
 group :test, :development do
   gem 'rake'

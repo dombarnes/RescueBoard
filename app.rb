@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/contrib'
 require 'tilt/erb'
 require 'httparty'
 require 'json'
@@ -72,16 +73,23 @@ helpers do
 			$datasequences << { :title => p[:title], :color => p[:color], :datapoints => $salesData }
 			$salesData = []
 		end
-		JSON.pretty_generate build_salesgraph($datasequences, $minTotal, $maxTotal.round(-1), chart_type)
+		build_salesgraph($datasequences, $minTotal, $maxTotal.round(-1), chart_type)
 	end
 
+end
+
+before /.*/ do
+  if request.url.match(/.json$/)
+    request.accept.unshift('application/json')
+    request.path_info = request.path_info.gsub(/.json$/,'')
+  end
 end
 
 get '/' do
 	erb :home
 end
 
-get '/rescuetime/pulse' do
+get '/rescuetime/pulse', :provides => [ :html ] do
 	raise Exception.new("Please specify RESCUEBOARD_API_KEY in your environment") if settings.rescueboard_api_key.nil?
 	
 	json = RestClient.get("https://www.rescuetime.com/anapi/daily_summary_feed?key=#{settings.rescueboard_api_key}")
@@ -93,7 +101,7 @@ get '/rescuetime/pulse' do
 	erb :pulse, locals: {:pulse => pulse, :hours => hours, :date => fDate}
 end # /rescuetime/pulse
 
-get '/appstore/downloads' do
+get '/appstore/downloads', :provides => [:html, :json] do
 	raise Exception.new("Please specify AF_USERNAME in your environment") if settings.af_username.nil?
 	raise Exception.new("Please specify AF_PASSWORD in your environment") if settings.af_password.nil?
 	raise Exception.new("Please specify AF_CLIENT_KEY in your environment") if settings.af_client_key.nil?
@@ -109,11 +117,15 @@ get '/appstore/downloads' do
 		$log.debug "Headers: #{test_response.headers.inspect}"
 	when 200
 		$log.debug "Status 200 OK: API responding"
-		build_response(report_type, days, chart_type)
+		@downloads = build_response(report_type, days, chart_type)
+    respond_to do |format|
+      format.json { @downloads.to_json }
+      # format.html { erb :index }
+    end
 	end
 end # /appstore/downloads
 
-get '/appstore/sales' do
+get '/appstore/sales', :provides => [:html, :json ] do
 	raise Exception.new("Please specify AF_USERNAME in your environment") if settings.af_username.nil?
 	raise Exception.new("Please specify AF_PASSWORD in your environment") if settings.af_password.nil?
 	raise Exception.new("Please specify AF_CLIENT_KEY in your environment") if settings.af_client_key.nil?
@@ -129,7 +141,12 @@ get '/appstore/sales' do
 		$log.debug "Headers: #{test_response.headers.inspect}"
 	when 200
 		$log.debug "Status 200 OK: API responding"
-		build_response(report_type, days, chart_type)
+		@sales = build_response(report_type, days, chart_type)
+    # http://www.mayerdan.com/ruby/2013/10/07/sinatra-respond_to-supporting-extensions/
+    respond_to do |format|
+      format.json { @sales.to_json }
+      # format.html { erb :index }
+    end
 	end
 
 end # /appstore/sales
