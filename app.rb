@@ -73,7 +73,7 @@ helpers do
 			$datasequences << { :title => p[:title], :color => p[:color], :datapoints => $salesData }
 			$salesData = []
 		end
-		build_salesgraph($datasequences, $minTotal, $maxTotal.round(-1), chart_type)
+		build_salesgraph($datasequences, $minTotal, $maxTotal.round(2), chart_type)
 	end
 
 end
