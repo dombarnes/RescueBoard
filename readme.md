@@ -1,12 +1,14 @@
-# RescueBoard
+# RescueBoard  
+
+[![security](https://hakiri.io/github/dombarnes/RescueBoard/master.svg)](https://hakiri.io/github/dombarnes/RescueBoard/master)  
 
 A selection of widgets for [Statusboard from Panic](http://www.panic.com/statusboard) with support for [RescueTime](http://www.rescuetime.com) and [AppFigures](http://appfigures.com).
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)  
 
 ## Requirements
-- Ruby 2.2
-- Sinatra 1.4.5
+- Ruby 2.2.x
+- Sinatra 1.4.6
 - Gems
     - ERB
     - JSON
