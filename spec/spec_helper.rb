@@ -15,7 +15,7 @@ describe 'RescueBoard' do
     end
 
     it "returns a 200 status code" do
-        get '/appstore/downloads' do
+        get '/' do
             expect(last_response).to be_ok
         end
     end

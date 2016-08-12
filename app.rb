@@ -89,7 +89,7 @@ get '/' do
 	erb :home
 end
 
-get '/rescuetime/pulse', :provides => [ :html ] do
+get '/rescuetime/pulse' do
 	raise Exception.new("Please specify RESCUEBOARD_API_KEY in your environment") if settings.rescueboard_api_key.nil?
 	
 	json = RestClient.get("https://www.rescuetime.com/anapi/daily_summary_feed?key=#{settings.rescueboard_api_key}")
@@ -101,7 +101,7 @@ get '/rescuetime/pulse', :provides => [ :html ] do
 	erb :pulse, locals: {:pulse => pulse, :hours => hours, :date => fDate}
 end # /rescuetime/pulse
 
-get '/appstore/downloads', :provides => [:html, :json] do
+get '/appstore/downloads', :provides => [:json] do
 	raise Exception.new("Please specify AF_USERNAME in your environment") if settings.af_username.nil?
 	raise Exception.new("Please specify AF_PASSWORD in your environment") if settings.af_password.nil?
 	raise Exception.new("Please specify AF_CLIENT_KEY in your environment") if settings.af_client_key.nil?
@@ -120,7 +120,6 @@ get '/appstore/downloads', :provides => [:html, :json] do
 		@downloads = build_response(report_type, days, chart_type)
     respond_to do |format|
       format.json { @downloads.to_json }
-      # format.html { erb :index }
     end
 	end
 end # /appstore/downloads
